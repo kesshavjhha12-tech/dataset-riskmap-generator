@@ -142,65 +142,7 @@ gcm_hairnet/
 | NDBI | Sentinel-2 | Built-up index |
 | Commercial Percentage | OSM | Percentage of commercial area |
 
----
 
-## Installation
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/yourusername/gcm_hairnet.git
-cd gcm_hairnet
-```
-
-### 2. Create Virtual Environment
-
-```bash
-# Using venv
-python -m venv .venv
-source .venv/bin/activate      # Linux/Mac
-# or
-.venv\Scripts\activate         # Windows
-
-# Using conda
-conda create -n gcm_env python=3.10
-conda activate gcm_env
-```
-
-### 3. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Install PyTorch (Optional - for model training)
-
-```bash
-# For CUDA 11.8
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
-
-# For CPU only
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
-```
-
----
-
-## Quick Start
-
-Run the complete pipeline:
-
-```bash
-python run_pipeline.py
-```
-
-This will:
-1. Collect data for all AOIs
-2. Extract GIS features
-3. Build risk components
-4. Generate risk maps
-5. Assemble the final dataset
-
----
 
 ## Pipeline Steps
 
@@ -302,8 +244,6 @@ Total Parameters: ~160
 - Convolutions capture local spatial interactions
 - Lightweight and interpretable
 - Prevents overfitting
-
----
 
 ## Output Format
 
