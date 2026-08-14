@@ -53,7 +53,7 @@ def create_qgis_project_template(aoi_name):
     with open(qgs_path, 'w', encoding='utf-8') as f:
         f.write(qgs_content)
     
-    print(f"✅ Created QGIS project: {qgs_path}")
+    print(f"Created QGIS project: {qgs_path}")
     return qgs_path
 
 
@@ -106,7 +106,7 @@ def create_geojson_grid(aoi_name):
     grid_path = os.path.join(DATA_ROOT, aoi_name, 'qgis', f'{aoi_name}_grid.geojson')
     gdf.to_file(grid_path, driver='GeoJSON')
     
-    print(f"✅ Created grid GeoJSON: {grid_path}")
+    print(f"Created grid GeoJSON: {grid_path}")
     return grid_path
 
 
@@ -155,7 +155,7 @@ def create_risk_geotiff(aoi_name):
     ) as dst:
         dst.write(risk, 1)
     
-    print(f"✅ Created risk GeoTIFF: {tiff_path}")
+    print(f"Created risk GeoTIFF: {tiff_path}")
     return tiff_path
 
 
@@ -218,7 +218,7 @@ def create_feature_geotiffs(aoi_name):
     gis_path = os.path.join(DATA_ROOT, aoi_name, 'gis', f'{aoi_name}_gis.npy')
     
     if not os.path.exists(gis_path):
-        print(f"⚠️ GIS features not found: {gis_path}")
+        print(f"GIS features not found: {gis_path}")
         return None
     
     gis = np.load(gis_path)  # (32, 32, 18)
@@ -259,7 +259,7 @@ def create_feature_geotiffs(aoi_name):
         ) as dst:
             dst.write(gis[:, :, i], 1)
         
-        print(f"✅ Created feature GeoTIFF: {tiff_path}")
+        print(f"Created feature GeoTIFF: {tiff_path}")
 
 
 def create_batch_file(aoi_name):
@@ -297,7 +297,7 @@ for name, path in layers:
     with open(batch_path, 'w') as f:
         f.write(batch_content)
     
-    print(f"✅ Created batch file: {batch_path}")
+    print(f"Created batch file: {batch_path}")
 
 
 def process_all_aois():
@@ -329,5 +329,5 @@ def process_all_aois():
 
 if __name__ == "__main__":
     process_all_aois()
-    print("\n✅ All QGIS projects created!")
+    print("\nAll QGIS projects created!")
     print("   Open each .qgs file in QGIS to view the data.")
