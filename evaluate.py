@@ -67,7 +67,7 @@ def evaluate_model(config):
     splits_path = os.path.join(DATA_ROOT, 'processed', 'splits.json')
     
     if not os.path.exists(splits_path):
-        print("⚠️ splits.json not found! Creating default...")
+        print("splits.json not found! Creating default...")
         splits = {
             "train": [
                 "Bengaluru_CBD", "Whitefield", "Hyderabad", "Chennai",
@@ -94,7 +94,7 @@ def evaluate_model(config):
     checkpoint_path = os.path.join(config['checkpoint_dir'], 'best_model.pth')
     
     if not os.path.exists(checkpoint_path):
-        print(f"⚠️ Model checkpoint not found: {checkpoint_path}")
+        print(f"Model checkpoint not found: {checkpoint_path}")
         print("   Creating a dummy model for testing...")
         model = GCMHAIRNet(config).to(config['device'])
     else:
@@ -253,7 +253,7 @@ def main():
     with open('evaluation_results.json', 'w') as f:
         json.dump(results, f, indent=2)
     
-    print("\n✅ Results saved to evaluation_results.json")
+    print("\nsave ho gayaa evaluation_results.json")
 
 
 if __name__ == "__main__":
