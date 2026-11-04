@@ -1,6 +1,4 @@
-"""
-Create QGIS Projects for Each AOI
-"""
+
 import os
 import json
 import numpy as np
@@ -9,14 +7,9 @@ from pathlib import Path
 from config import DATA_ROOT, AOIS
 
 def create_qgis_project_template(aoi_name):
-    """Create a QGIS project template for an AOI"""
-    
-    # Paths
     aoi_dir = os.path.join(DATA_ROOT, aoi_name)
     qgis_dir = os.path.join(aoi_dir, 'qgis')
     os.makedirs(qgis_dir, exist_ok=True)
-    
-    # Get AOI info
     aoi_info = AOIS.get(aoi_name, {})
     lat = aoi_info.get('lat', 0)
     lon = aoi_info.get('lon', 0)
@@ -72,12 +65,12 @@ def create_geojson_grid(aoi_name):
     
     df = pd.read_csv(csv_path)
     
-    # Get AOI center
+  
     aoi_info = AOIS.get(aoi_name, {})
     lat = aoi_info.get('lat', 12.9716)
     lon = aoi_info.get('lon', 77.5946)
     
-    # Create polygons for each cell
+ 
     polygons = []
     cell_size = 0.009  # ~1km in degrees
     
@@ -99,10 +92,10 @@ def create_geojson_grid(aoi_name):
         ])
         polygons.append(poly)
     
-    # Create GeoDataFrame
+ 
     gdf = gpd.GeoDataFrame(df, geometry=polygons, crs="EPSG:4326")
     
-    # Save
+
     grid_path = os.path.join(DATA_ROOT, aoi_name, 'qgis', f'{aoi_name}_grid.geojson')
     gdf.to_file(grid_path, driver='GeoJSON')
     
@@ -116,7 +109,7 @@ def create_risk_geotiff(aoi_name):
     import rasterio
     from rasterio.transform import from_origin
     
-    # Load risk map
+    
     risk_path = os.path.join(DATA_ROOT, aoi_name, 'labels', f'{aoi_name}_risk.npy')
     
     if not os.path.exists(risk_path):
@@ -125,19 +118,17 @@ def create_risk_geotiff(aoi_name):
     
     risk = np.load(risk_path)
     
-    # Get AOI center
+  
     aoi_info = AOIS.get(aoi_name, {})
     lat = aoi_info.get('lat', 12.9716)
     lon = aoi_info.get('lon', 77.5946)
     
     # Create GeoTIFF
     tiff_path = os.path.join(DATA_ROOT, aoi_name, 'qgis', f'{aoi_name}_risk.tif')
-    
-    # Define transform (assuming 1km cells)
+
     cell_size = 0.009
     transform = from_origin(
-        lon - 0.144,  # west
-        lat + 0.144,  # north
+        lat + 0.144,  
         cell_size,
         cell_size
     )
@@ -307,23 +298,11 @@ def process_all_aois():
         print(f"\n{'='*60}")
         print(f"Processing: {aoi_name}")
         print('='*60)
-        
-        # Create QGIS project
         create_qgis_project_template(aoi_name)
-        
-        # Create grid
         create_geojson_grid(aoi_name)
-        
-        # Create risk map
         create_risk_geotiff(aoi_name)
-        
-        # Create components
         create_component_geotiffs(aoi_name)
-        
-        # Create feature GeoTIFFs
-        create_feature_geotiffs(aoi_name)
-        
-        # Create batch file
+        create_feature_geotiffs(aoi_name) 
         create_batch_file(aoi_name)
 
 
