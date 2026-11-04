@@ -18,25 +18,24 @@ def run_pipeline():
     print("GCM-HAIRNet Dataset Generation Pipeline")
     print("=" * 60)
     
-    # Step 1: Load AOIs
-    print("\n📌 Step 1: Loading AOIs...")
+    print(" Loading AOIs")
     aoi_list = get_all_aois()
     print(f"   Total AOIs: {len(aoi_list)}")
     
     # Step 2: Collect Data
-    print("\n📌 Step 2: Collecting Data...")
+    print("\nCollecting Data")
     collect_all_aois(aoi_list)
     
     # Step 3: Extract Features
-    print("\n📌 Step 3: Extracting Features...")
+    print("\nExtracting Features")
     extract_all_aois(aoi_list)
     
     # Step 4: Build Components
-    print("\n📌 Step 4: Building Components...")
+    print("Building Components")
     build_all_components(aoi_list)
     
     # Step 5: Train Tiny CNN
-    print("\n📌 Step 5: Training Tiny CNN...")
+    print("Training Tiny CNN")
     trainer = TinyCNNTrainer()
     X, y = trainer.prepare_training_data(aoi_list)
     model = trainer.train(X, y)
@@ -49,12 +48,12 @@ def run_pipeline():
         risk_generator.generate_for_aoi(aoi.name)
     
     # Step 7: Build Dataset
-    print("\n📌 Step 7: Building Final Dataset...")
+    print("Building Final Dataset")
     dataset_builder = DatasetBuilder()
     dataset_builder.build(aoi_list)
     
     print("\n" + "=" * 60)
-    print("✅ Pipeline Complete!")
+    
     print(f"   Dataset saved to: {DATA_ROOT}/processed")
     print("=" * 60)
 
