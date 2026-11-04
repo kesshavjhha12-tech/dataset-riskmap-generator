@@ -42,7 +42,7 @@ def run_pipeline():
     trainer.save_model(os.path.join(DATA_ROOT, 'tiny_cnn.pth'))
     
     # Step 6: Generate Risk Maps
-    print("\n📌 Step 6: Generating Risk Maps...")
+    print("gwnerating risk maps")
     risk_generator = RiskGenerator(os.path.join(DATA_ROOT, 'tiny_cnn.pth'))
     for aoi in aoi_list:
         risk_generator.generate_for_aoi(aoi.name)
