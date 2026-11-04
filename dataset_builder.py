@@ -1,6 +1,4 @@
-"""
-Dataset Builder: Final dataset for GCM-HAIRNet training
-"""
+
 import os
 import numpy as np
 import json
@@ -29,12 +27,8 @@ class DatasetBuilder:
         if not all(os.path.exists(p) for p in [image_path, gis_path, label_path]):
             print(f"Missing data for {aoi_name}")
             return
-        
-        # Load and resize image (3200×3200 → 256×256)
         image = np.load(image_path)
         image = zoom(image, (256/3200, 256/3200, 1))
-        
-        # Load GIS and label
         gis = np.load(gis_path)
         label = np.load(label_path)
         
