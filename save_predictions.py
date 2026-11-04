@@ -38,7 +38,7 @@ class UrbanRiskDataset:
                     'aoi': aoi
                 })
             else:
-                print(f"⚠️ Missing data for {aoi}")
+                print(f"Missing data {aoi}")
     
     def __len__(self):
         return len(self.samples)
@@ -111,8 +111,7 @@ def save_predictions():
     test_dataset = UrbanRiskDataset(splits['test'], data_dir=data_dir)
     print(f"   Found {len(test_dataset)} test samples")
     
-    # Load model
-    print("📊 Loading model...")
+  
     model = GCMHAIRNet({'device': device}).to(device)
     
     checkpoint_path = os.path.join(checkpoint_dir, 'best_model.pth')
@@ -130,7 +129,7 @@ def save_predictions():
     all_targets = []
     all_aois = []
     
-    print("📊 Running predictions...")
+    print(" Running predictions")
     with torch.no_grad():
         for idx in range(len(test_dataset)):
             sample = test_dataset[idx]
@@ -150,7 +149,7 @@ def save_predictions():
             all_targets.append(label.cpu().numpy())
             all_aois.append(sample['aoi'])
     
-    # Save to disk
+   
     save_dir = './visualization_data'
     os.makedirs(save_dir, exist_ok=True)
     
@@ -161,15 +160,13 @@ def save_predictions():
     with open(os.path.join(save_dir, 'aois.json'), 'w') as f:
         json.dump(all_aois, f)
     
-    print(f"\n✅ Saved predictions to {save_dir}")
+    print(f" Saved predictions")
     print(f"   Images shape: {np.array(all_images).shape}")
     print(f"   Predictions shape: {np.array(all_preds).shape}")
     print(f"   Targets shape: {np.array(all_targets).shape}")
 
 
 if __name__ == "__main__":
-    # Set environment to CPU if CUDA issues
-    # import os
-    # os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+   
     
     save_predictions()
